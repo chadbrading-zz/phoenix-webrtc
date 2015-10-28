@@ -42,14 +42,21 @@ hangupButton.onclick = hangup;
 
 function connect() {
   console.log("Requesting local stream");
-  navigator.getUserMedia({audio:true, video:true}, gotStream, error => {
+  navigator.getUserMedia({video:true}, gotStreamVideo, error => {
+          console.log("getUserMedia error: ", error);
+              });
+  navigator.getUserMedia({audio:true, video:true}, gotStreamAudioVideo, error => {
           console.log("getUserMedia error: ", error);
               });
 }
 
-function gotStream(stream) {
-  console.log("Received local stream");
+function gotStreamVideo(stream) {
+  console.log("Received local video stream");
   localVideo.src = URL.createObjectURL(stream);
+}
+
+function gotStreamAudioVideo(stream) {
+  console.log("Received local Audio/Video stream");
   localStream = stream;
   setupPeerConnection();
 }
